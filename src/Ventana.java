@@ -14,7 +14,7 @@ public class Ventana extends JFrame{
 	 int totalBtn=20;
 	    JButton botones[] = new JButton[totalBtn];
 	    String textoBotones[] = {"c","/","*","ce","7","8","9","-","4","5","6","+","1","2","3","^","%","0",".","="};
-	    int numerosBotones[] = {17, 12, 13, 14, 8, 9, 10, 4, 5, 6};
+	    int numerosBotones[] = {17, 12, 13, 14, 8, 9, 10, 4, 5, 6, 1, 2, 7,11, 15, 16};
 	    boolean nuevoNumero = true;
 		 boolean puntoDecimal = false;
 	public Ventana() {
@@ -27,8 +27,6 @@ public class Ventana extends JFrame{
 		pantalla();
 		btnNum();
 		
-		
-		txtResultado.setText(Operaciones.operaciones("(3*4-(2^5))* 4/2"));//cambiar
 	}//constructor
 	
 	public void metodoMagico(Component c,int x, int y, int w, int h) {
@@ -43,9 +41,9 @@ public class Ventana extends JFrame{
 	public void estiloBtn(JButton c) {
 		c.setFont(new Font("MONOSPACED",PLAIN,30));
 		c.setOpaque(true); //Para poder darle un color de fondo
-        c.setBackground(Color.DARK_GRAY); //Color de fondo
-        c.setForeground(Color.WHITE); //Color de fuente
-        c.setBorder(new LineBorder(Color.BLUE)); //Borde
+     //  c.setBackground(Color.DARK_GRAY); //Color de fondo
+        c.setForeground(Color.BLACK); //Color de fuente
+       // c.setBorder(new LineBorder(Color.WHITE)); //Borde
         add(c);
 	}
 	
@@ -56,7 +54,7 @@ public class Ventana extends JFrame{
         txtResultado.setBackground(Color.WHITE); //Color de fondo
         txtResultado.setForeground(Color.BLUE); //Color de fuente
         txtResultado.setBorder(new LineBorder(Color.DARK_GRAY)); //Borde
-        txtResultado.setFont(new Font("MONOSPACED", PLAIN, 30)); //Fuente
+        txtResultado.setFont(new Font("MONOSPACED", PLAIN, 40)); //Fuente
         txtResultado.setHorizontalAlignment(SwingConstants.RIGHT); //Alineamiento horizontal derecha
         add(txtResultado); //Añado el JLabel al JFrame
 	}
@@ -72,9 +70,11 @@ public class Ventana extends JFrame{
 			 metodoMagico(botones[i],xBotones[i],yBotones[i],anchoBoton[i],altoBoton[i]);
 			 estiloBtn(botones[i]);
 			}
+		eventoBotones();
+		eventoOperacion();
      }
-	private void eventosNumeros() {
-        for (int i = 0; i < 10; i++){
+	private void eventoBotones() {
+        for (int i = 0; i < 16; i++){
             int numBoton = numerosBotones[i];
             botones[numBoton].addActionListener(new ActionListener(){
                 @Override
@@ -92,6 +92,58 @@ public class Ventana extends JFrame{
             });
         }
     }
+	
+	 private void eventoOperacion(){
+	        botones[18].addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                if (!puntoDecimal){
+	                	txtResultado.setText(txtResultado.getText() + textoBotones[18]);
+	                    puntoDecimal = true; 
+	                    nuevoNumero = false;
+	                } else if(puntoDecimal = true) {
+	                	JOptionPane.showMessageDialog(null, "ya ingresaste un punto decimal");
+	                }
+	            }
+	        });
+	        botones[19].addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Component c=(Component) e.getSource();
+	        		if(c== botones[19]) {
+	        			txtResultado.setText(Operaciones.operaciones(txtResultado.getText()));//cambiar
+	     	           
+	        		}
+	             }
+	        });
+	        botones[0].addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Component c=(Component) e.getSource();
+	        		if(c== botones[0]) {
+	        			txtResultado.setText(" ");
+	        			
+	        		}
+	             }
+	        });
+	        botones[3].addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	Component c=(Component) e.getSource();
+	        		if(c== botones[3]) {
+	        			String resultado="";
+	        			for(int i = 0; i <( txtResultado.getText().length()-1); i++) {	
+	        				resultado=resultado+txtResultado.getText().charAt(i);
+	        			}
+	        			if(resultado=="") {
+	        				resultado=" ";
+	        			}
+	        			txtResultado.setText(resultado);
+	        			
+	        		}
+	             }
+	        });
+	    }
 	
 public static void main(String[] args) {
 	SwingUtilities.invokeLater(new Runnable() {

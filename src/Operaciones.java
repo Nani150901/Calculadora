@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 public class Operaciones {
-	private static String depurar(String s) {
+	static String depurar(String s) {
 	    s = s.replaceAll("\\s+", ""); //Elimina espacios en blanco
 	    s = "(" + s + ")";
 	    String simbols = "+-*^/()";
@@ -17,7 +17,7 @@ public class Operaciones {
 	 //Jerarquia de los operadores
 	  private static int pref(String op) {
 	    int prf = 99;
-	    if (op.equals("^")) prf = 5;
+	    if (op.equals("^") || op.equals("%")) prf = 5;
 	    if (op.equals("*") || op.equals("/")) prf = 4;
 	    if (op.equals("+") || op.equals("-")) prf = 3;
 	    if (op.equals(")")) prf = 2;
@@ -32,7 +32,7 @@ public class Operaciones {
 		    if (op.equals("*")) return (num1 * num2);
 		    if (op.equals("/")) return (num1 / num2);
 		    if (op.equals("%")) return (num1 % num2);
-		    if (op.equals("^")) return (int) (Math.pow(num1, num1));
+		    if (op.equals("^")) return (int) (Math.pow(num1, num2));
 		    return 0;
 		  }
 	public static String operaciones(String txtRsultado) {
